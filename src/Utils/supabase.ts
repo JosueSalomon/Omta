@@ -10,6 +10,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
     throw new Error("Faltan las variables de entorno SUPABASE_URL o SUPABASE_ANON_KEY");
 }
 
-const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, { db: { schema: 'vero' } });
+const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, { db: { schema: 'omta' } });
 
 export default supabase;
