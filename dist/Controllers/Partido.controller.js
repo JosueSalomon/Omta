@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obenterPartidosDiaActual = exports.obtenerHistorialPartidos = exports.iniciarPartido = exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
+exports.obtenerInfoPartido = exports.obenterPartidosDiaActual = exports.obtenerHistorialPartidos = exports.iniciarPartido = exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
 const Partido_model_1 = require("../Models/Partido.model");
 const cancelarPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -186,3 +186,32 @@ const obenterPartidosDiaActual = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.obenterPartidosDiaActual = obenterPartidosDiaActual;
+const obtenerInfoPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id_partido = Number(req.params.id_partido);
+        if (!id_partido) {
+            return res.status(400).json({
+                message: "El parametro id_partido es requerido",
+                codigoResultado: -1,
+            });
+        }
+        const informacion = yield Partido_model_1.Partido.obtenerInformacionPartido(id_partido);
+        return res.status(200).json({
+            message: "Información encontrada",
+            data: informacion,
+            codigoResultado: 0,
+        });
+    }
+    catch (error) {
+        const errorMessage = error && typeof error === "object" && "message" in error
+            ? error.message
+            : String(error);
+        console.error("Error al crear partido:", errorMessage);
+        return res.status(500).json({
+            mensaje: "Error interno del servidor",
+            detalle: errorMessage,
+            codigoResultado: -99,
+        });
+    }
+});
+exports.obtenerInfoPartido = obtenerInfoPartido;

@@ -428,6 +428,33 @@ export type Database = {
           nombre_cancha_out: string
         }[]
       }
+      fn_obtener_informacion_partido: {
+        Args: { fn_id_partido: number }
+        Returns: {
+          id_partido_out: number
+          id_cancha_out: number
+          nombre_cancha_out: string
+          id_jugador_1_out: number
+          nombre_jugador_1_out: string
+          id_jugador_2_out: number
+          nombre_jugador_2_out: string
+          id_estado_partido_out: number
+          estado_partido_out: string
+          fecha_partido_out: string
+          hora_inicio_out: string
+          id_set_out: number
+          estado_set_out: string
+          numero_set_out: number
+          cantidad_juegos_jugador1_out: number
+          id_jugador_ganador_set_out: number
+          cantidad_juegos_jugador_2_out: number
+          tipo_juego_out: string
+          numero_juego_actual_out: number
+          puntos_jugador1_out: string
+          puntos_jugador_2out: string
+          id_jugador_ganador_juego_out: number
+        }[]
+      }
       fn_obtener_partidos_fecha_actual: {
         Args: Record<PropertyKey, never> | { fn_id_cancha: number }
         Returns: {

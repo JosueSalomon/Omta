@@ -97,4 +97,19 @@ export class Partido {
 
     return data;
   }
+
+  static async obtenerInformacionPartido(id_partido: number) {
+    const { data, error } = await supabase.rpc(
+      "fn_obtener_informacion_partido",
+      {
+        fn_id_partido: id_partido,
+      }
+    );
+
+    if (error) {
+      throw new Error(`Error Supabase: ${error.message}`);
+    }
+
+    return data;
+  }
 }

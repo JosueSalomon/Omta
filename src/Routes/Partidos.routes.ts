@@ -6,6 +6,7 @@ import {
   iniciarPartido,
   obtenerHistorialPartidos,
   obenterPartidosDiaActual,
+  obtenerInfoPartido,
 } from "../Controllers/Partido.controller";
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.post("/iniciarPartido/:id_partido", iniciarPartido);
 router.get("/historial", obtenerHistorialPartidos);
 
 router.get("/obtenerPartidosDiaActual/:id_cancha", obenterPartidosDiaActual);
+router.get("/obtenerInfoPartido/:id_partido", obtenerInfoPartido);
 
 export default router;

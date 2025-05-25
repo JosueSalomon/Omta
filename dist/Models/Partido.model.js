@@ -84,5 +84,16 @@ class Partido {
             return data;
         });
     }
+    static obtenerInformacionPartido(id_partido) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data, error } = yield supabase_1.default.rpc("fn_obtener_informacion_partido", {
+                fn_id_partido: id_partido,
+            });
+            if (error) {
+                throw new Error(`Error Supabase: ${error.message}`);
+            }
+            return data;
+        });
+    }
 }
 exports.Partido = Partido;
