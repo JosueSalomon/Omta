@@ -7,6 +7,12 @@ const express_1 = __importDefault(require("express"));
 const Partido_controller_1 = require("../Controllers/Partido.controller");
 const router = express_1.default.Router();
 //rutas
-router.get('/cancelar/:id', Partido_controller_1.cancelarPartido);
-router.get('/finalizar/:id', Partido_controller_1.finalizarPartido);
+router.post("/crear", Partido_controller_1.crearPartido);
+router.put("/cancelar/:id", Partido_controller_1.cancelarPartido);
+router.put("/finalizar/:id", Partido_controller_1.finalizarPartido);
+router.get("/prueba", (req, res) => {
+    res.json({
+        mensaje: "Hola jajaj",
+    });
+});
 exports.default = router;

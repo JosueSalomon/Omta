@@ -17,8 +17,8 @@ const supabase_1 = __importDefault(require("../Utils/supabase"));
 class Partido {
     static cancelarPartido(idPartido) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { data, error } = yield supabase_1.default.rpc('p_cancelar_partido', {
-                p_id_partido: idPartido
+            const { data, error } = yield supabase_1.default.rpc("p_cancelar_partido", {
+                p_id_partido: idPartido,
             });
             if (error) {
                 throw error;
@@ -28,13 +28,29 @@ class Partido {
     }
     static finalizarPartido(idPartido) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { data, error } = yield supabase_1.default.rpc('p_finalizar_partido', {
-                p_id_partido: idPartido
+            const { data, error } = yield supabase_1.default.rpc("p_finalizar_partido", {
+                p_id_partido: idPartido,
             });
             if (error) {
                 throw error;
             }
             return data;
+        });
+    }
+    static crear_partido(id_cancha, id_jugador_1, id_jugador_2, fecha_partido, hora_inicio) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data, error } = yield supabase_1.default.rpc("fn_crear_partido", {
+                fn_id_cancha: id_cancha,
+                fn_id_jugador_1: id_jugador_1,
+                fn_id_jugador_2: id_jugador_2,
+                fn_fecha_partido: fecha_partido,
+                fn_hora_inicio: hora_inicio,
+            });
+            if (error) {
+                throw new Error(`Error Supabase: ${error.message}`);
+            }
+            const resultado = data[0];
+            return resultado;
         });
     }
 }
