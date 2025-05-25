@@ -5,6 +5,7 @@ import cors from 'cors';
 
 //rutass ola
 import administratorRoutes from './Routes/Administrator.routes'
+import partidoRoutes from './Routes/Partidos.routes'
 
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 //Rutas
 
 app.use('/administrator', administratorRoutes);
+app.use('/partidos', partidoRoutes);
 
 //Servidor Raiz.
 app.get('/', (req: Request, res: Response) => {
