@@ -28,6 +28,30 @@ class Administrator {
             return data;
         });
     }
+    static insertUserToken(user, contrasenia, token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { data, error } = yield supabase_1.default.rpc('insertar_token_usuario', {
+                    p_user: user,
+                    p_contrasenia: contrasenia,
+                    p_token: token
+                });
+                if (error) {
+                    console.log(error);
+                    throw new Error(`Error: ${error.message}`);
+                }
+                console.log(data);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    throw new Error(error.message);
+                }
+                else {
+                    throw new Error("Unknown error");
+                }
+            }
+        });
+    }
     static Login(user, contra) {
         return __awaiter(this, void 0, void 0, function* () {
             const { data, error } = yield supabase_1.default.rpc("login_admin", {

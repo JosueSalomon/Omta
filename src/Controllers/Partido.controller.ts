@@ -151,7 +151,9 @@ export const obtenerHistorialPartidos = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const historialPartidos = await Partido.obtenerHistorialPartidos(Number(id));
+    const historialPartidos = await Partido.obtenerHistorialPartidos(
+      Number(id)
+    );
 
     res.status(201).json({
       historialPartidos,
@@ -166,6 +168,95 @@ export const obtenerHistorialPartidos = async (req: Request, res: Response) => {
     res.status(500).json({
       message: "Error Information: ",
       error: errorInfo,
+    });
+  }
+};
+
+export const obenterPartidosDiaActual = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const id_cancha = Number(req.params.id_cancha);
+
+    if (!id_cancha) {
+      return res.status(400).json({
+        message: "El parametro id cancha es requerido",
+        resultado: -2,
+      });
+    }
+
+    const partidos = await Partido.obtenerPartidosDelDiaActual(id_cancha);
+    console.log(partidos);
+
+    if (partidos.length === 0) {
+      return res.status(400).json({
+        message: "No se encontraron partidos en el día de hoy para la cancha",
+        id_cancha,
+        codigoResultado: -1,
+        data: [],
+      });
+    }
+
+    if (partidos[0].id_partido_out === 0) {
+      return res.status(400).json({
+        message: "No existe el id cancha",
+        codigoResultado: -3,
+      });
+    }
+
+    return res.status(200).json({
+      message: "Partidos encontrados",
+      codigoResultado: 0,
+      data: partidos,
+    });
+  } catch (error) {
+    const errorMessage =
+      error && typeof error === "object" && "message" in error
+        ? (error as { message: string }).message
+        : String(error);
+
+    console.error("Error al crear partido:", errorMessage);
+    return res.status(500).json({
+      mensaje: "Error interno del servidor",
+      detalle: errorMessage,
+      codigoResultado: -99,
+    });
+  }
+};
+
+export const obtenerInfoPartido = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const id_partido = Number(req.params.id_partido);
+
+    if (!id_partido) {
+      return res.status(400).json({
+        message: "El parametro id_partido es requerido",
+        codigoResultado: -1,
+      });
+    }
+
+    const informacion = await Partido.obtenerInformacionPartido(id_partido);
+
+    return res.status(200).json({
+      message: "Información encontrada",
+      data: informacion,
+      codigoResultado: 0,
+    });
+  } catch (error) {
+    const errorMessage =
+      error && typeof error === "object" && "message" in error
+        ? (error as { message: string }).message
+        : String(error);
+
+    console.error("Error al crear partido:", errorMessage);
+    return res.status(500).json({
+      mensaje: "Error interno del servidor",
+      detalle: errorMessage,
+      codigoResultado: -99,
     });
   }
 };

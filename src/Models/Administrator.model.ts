@@ -15,6 +15,30 @@ export class Administrator {
     return data;
     }
 
+static async insertUserToken(user: any, contrasenia: any, token: any): Promise<any> {
+    try {
+        const { data, error } = await supabase.rpc('insertar_token_usuario', {
+        p_user: user,
+        p_contrasenia: contrasenia,
+        p_token: token
+        });
+
+        if (error) {
+            console.log(error)
+        throw new Error(`Error: ${error.message}`)
+        }
+        
+        console.log(data);
+
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+        throw new Error(error.message);
+        } else {
+        throw new Error("Unknown error");
+        }
+    }
+    }
+
     static async Login(user: string, contra: string){
         const{data,error} = await supabase.rpc("login_admin",{
             p_user:user,

@@ -74,12 +74,40 @@ export class Partido {
     const resultado = data[0];
     return resultado;
   }
-
+  //Historial
   static async obtenerHistorialPartidos(idPartido: number) {
     const { data, error } = await supabase.rpc("p_obtener_historial_partidos");
 
     if (error) {
       throw error;
+    }
+
+    return data;
+  }
+
+  static async obtenerPartidosDelDiaActual(id_cancha: number) {
+    const { data, error } = await supabase.rpc(
+      "fn_obtener_partidos_fecha_actual",
+      { fn_id_cancha: id_cancha }
+    );
+
+    if (error) {
+      throw new Error(`Error Supabase: ${error.message}`);
+    }
+
+    return data;
+  }
+
+  static async obtenerInformacionPartido(id_partido: number) {
+    const { data, error } = await supabase.rpc(
+      "fn_obtener_informacion_partido",
+      {
+        fn_id_partido: id_partido,
+      }
+    );
+
+    if (error) {
+      throw new Error(`Error Supabase: ${error.message}`);
     }
 
     return data;
