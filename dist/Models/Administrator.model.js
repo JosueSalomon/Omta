@@ -28,5 +28,42 @@ class Administrator {
             return data;
         });
     }
+    static Login(user, contra) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data, error } = yield supabase_1.default.rpc("login_admin", {
+                p_user: user,
+                p_contra: contra
+            });
+            if (!data) {
+                return "null";
+            }
+            if (data.codigo === 1) {
+                return {
+                    code: 1,
+                    message: "Usuario no encontrado"
+                };
+            }
+            if (data.codigo === 2) {
+                return {
+                    code: 2,
+                    message: "Contraseña incorrecta"
+                };
+            }
+            if (data.codigo === 3) {
+                return {
+                    code: 3,
+                    message: "Login exitoso"
+                };
+            }
+            ;
+            if (data.codigo === 4) {
+                return {
+                    code: 4,
+                    message: "Error insesperado"
+                };
+            }
+            ;
+        });
+    }
 }
 exports.Administrator = Administrator;

@@ -14,4 +14,45 @@ export class Administrator {
 
     return data;
     }
+
+    static async Login(user: string, contra: string){
+        const{data,error} = await supabase.rpc("login_admin",{
+            p_user:user,
+            p_contra:contra
+        });
+
+        if (!data) {
+            return "null";
+        }
+
+        if (data.codigo === 1) {
+            return {
+                code: 1,
+                message: "Usuario no encontrado"
+            };
+        }
+
+        if (data.codigo === 2) {
+            return {
+                code: 2,
+                message: "Contraseña incorrecta"
+            };
+        }
+
+        if (data.codigo === 3) {
+            return {
+                code: 3,
+                message: "Login exitoso"
+            };
+        };
+
+        if (data.codigo === 4) {
+            return {
+                code: 4,
+                message: "Error insesperado"
+            };
+        };
+    }
+    
+
 }
