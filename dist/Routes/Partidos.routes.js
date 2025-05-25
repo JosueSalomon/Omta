@@ -10,9 +10,4 @@ const router = express_1.default.Router();
 router.post("/crear", Partido_controller_1.crearPartido);
 router.put("/cancelar/:id", Partido_controller_1.cancelarPartido);
 router.put("/finalizar/:id", Partido_controller_1.finalizarPartido);
-router.get("/prueba", (req, res) => {
-    res.json({
-        mensaje: "Hola jajaj",
-    });
-});
 exports.default = router;

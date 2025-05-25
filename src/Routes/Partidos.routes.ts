@@ -11,10 +11,4 @@ router.post("/crear", crearPartido);
 router.put("/cancelar/:id", cancelarPartido);
 router.put("/finalizar/:id", finalizarPartido);
 
-router.get("/prueba", (req: Request, res: Response): any => {
-  res.json({
-    mensaje: "Hola jajaj",
-  });
-});
-
 export default router;
