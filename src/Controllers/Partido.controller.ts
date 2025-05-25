@@ -54,16 +54,16 @@ export const crearPartido = async (
   try {
     const {
       id_cancha,
-      id_jugador_1,
-      id_jugador_2,
+      nombre_jugador_1,
+      nombre_jugador_2,
       fecha_partido,
       hora_inicio,
     } = req.body;
 
     if (
       !id_cancha ||
-      !id_jugador_1 ||
-      !id_jugador_2 ||
+      !nombre_jugador_1 ||
+      !nombre_jugador_2 ||
       !fecha_partido ||
       !hora_inicio
     ) {
@@ -75,8 +75,8 @@ export const crearPartido = async (
 
     const resultado = await Partido.crear_partido(
       id_cancha,
-      id_jugador_1,
-      id_jugador_2,
+      nombre_jugador_1,
+      nombre_jugador_2,
       fecha_partido,
       hora_inicio
     );
@@ -143,6 +143,29 @@ export const iniciarPartido = async (
       mensaje: "Error interno del servidor",
       detalle: errorMessage,
       codigoResultado: -99,
+    });
+  }
+};
+
+export const obtenerHistorialPartidos = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const historialPartidos = await Partido.obtenerHistorialPartidos(Number(id));
+
+    res.status(201).json({
+      historialPartidos,
+    });
+  } catch (error) {
+    const errorInfo =
+      error && typeof error === "object"
+        ? JSON.stringify(error, null, 2)
+        : error?.toString() || "Unknown error";
+
+    console.error("Error Information: ", errorInfo);
+    res.status(500).json({
+      message: "Error Information: ",
+      error: errorInfo,
     });
   }
 };

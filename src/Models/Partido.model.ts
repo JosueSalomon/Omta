@@ -41,15 +41,15 @@ export class Partido {
 
   static async crear_partido(
     id_cancha: number,
-    id_jugador_1: number,
-    id_jugador_2: number,
+    nombre_jugador_1: string,
+    nombre_jugador_2: string,
     fecha_partido: string,
     hora_inicio: string
   ) {
     const { data, error } = await supabase.rpc("fn_crear_partido", {
       fn_id_cancha: id_cancha,
-      fn_id_jugador_1: id_jugador_1,
-      fn_id_jugador_2: id_jugador_2,
+      nombre_jugador_1: nombre_jugador_1,
+      nombre_jugador_2: nombre_jugador_2,
       fn_fecha_partido: fecha_partido,
       fn_hora_inicio: hora_inicio,
     });
@@ -73,5 +73,15 @@ export class Partido {
 
     const resultado = data[0];
     return resultado;
+  }
+
+  static async obtenerHistorialPartidos(idPartido: number) {
+    const { data, error } = await supabase.rpc("p_obtener_historial_partidos");
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
   }
 }
