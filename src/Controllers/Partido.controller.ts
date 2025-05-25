@@ -54,16 +54,16 @@ export const crearPartido = async (
   try {
     const {
       id_cancha,
-      id_jugador_1,
-      id_jugador_2,
+      nombre_jugador_1,
+      nombre_jugador_2,
       fecha_partido,
       hora_inicio,
     } = req.body;
 
     if (
       !id_cancha ||
-      !id_jugador_1 ||
-      !id_jugador_2 ||
+      !nombre_jugador_1 ||
+      !nombre_jugador_2 ||
       !fecha_partido ||
       !hora_inicio
     ) {
@@ -75,8 +75,8 @@ export const crearPartido = async (
 
     const resultado = await Partido.crear_partido(
       id_cancha,
-      id_jugador_1,
-      id_jugador_2,
+      nombre_jugador_1,
+      nombre_jugador_2,
       fecha_partido,
       hora_inicio
     );

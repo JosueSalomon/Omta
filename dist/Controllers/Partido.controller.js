@@ -53,10 +53,10 @@ const finalizarPartido = (req, res) => __awaiter(void 0, void 0, void 0, functio
 exports.finalizarPartido = finalizarPartido;
 const crearPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id_cancha, id_jugador_1, id_jugador_2, fecha_partido, hora_inicio, } = req.body;
+        const { id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio, } = req.body;
         if (!id_cancha ||
-            !id_jugador_1 ||
-            !id_jugador_2 ||
+            !nombre_jugador_1 ||
+            !nombre_jugador_2 ||
             !fecha_partido ||
             !hora_inicio) {
             return res.status(400).json({
@@ -64,7 +64,7 @@ const crearPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 codigoResultado: -1,
             });
         }
-        const resultado = yield Partido_model_1.Partido.crear_partido(id_cancha, id_jugador_1, id_jugador_2, fecha_partido, hora_inicio);
+        const resultado = yield Partido_model_1.Partido.crear_partido(id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio);
         if (resultado.codigo !== 0) {
             return res.status(400).json({
                 mensaje: resultado.mensaje,
