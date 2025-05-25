@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.iniciarPartido = exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
+exports.obtenerHistorialPartidos = exports.iniciarPartido = exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
 const Partido_model_1 = require("../Models/Partido.model");
 const cancelarPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -122,3 +122,23 @@ const iniciarPartido = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.iniciarPartido = iniciarPartido;
+const obtenerHistorialPartidos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const historialPartidos = yield Partido_model_1.Partido.obtenerHistorialPartidos(Number(id));
+        res.status(201).json({
+            historialPartidos,
+        });
+    }
+    catch (error) {
+        const errorInfo = error && typeof error === "object"
+            ? JSON.stringify(error, null, 2)
+            : (error === null || error === void 0 ? void 0 : error.toString()) || "Unknown error";
+        console.error("Error Information: ", errorInfo);
+        res.status(500).json({
+            message: "Error Information: ",
+            error: errorInfo,
+        });
+    }
+});
+exports.obtenerHistorialPartidos = obtenerHistorialPartidos;

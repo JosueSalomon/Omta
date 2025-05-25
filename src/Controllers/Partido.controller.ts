@@ -146,3 +146,26 @@ export const iniciarPartido = async (
     });
   }
 };
+
+export const obtenerHistorialPartidos = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const historialPartidos = await Partido.obtenerHistorialPartidos(Number(id));
+
+    res.status(201).json({
+      historialPartidos,
+    });
+  } catch (error) {
+    const errorInfo =
+      error && typeof error === "object"
+        ? JSON.stringify(error, null, 2)
+        : error?.toString() || "Unknown error";
+
+    console.error("Error Information: ", errorInfo);
+    res.status(500).json({
+      message: "Error Information: ",
+      error: errorInfo,
+    });
+  }
+};
