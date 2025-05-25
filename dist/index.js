@@ -9,19 +9,21 @@ const cors_1 = __importDefault(require("cors"));
 //rutass ola
 const Administrator_routes_1 = __importDefault(require("./Routes/Administrator.routes"));
 const Partidos_routes_1 = __importDefault(require("./Routes/Partidos.routes"));
+const Canchas_routes_1 = __importDefault(require("./Routes/Canchas.routes"));
 dotenv_1.default.config();
-require('dotenv').config();
+require("dotenv").config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 //Rutas
-app.use('/administrator', Administrator_routes_1.default);
-app.use('/partidos', Partidos_routes_1.default);
+app.use("/administrator", Administrator_routes_1.default);
+app.use("/partidos", Partidos_routes_1.default);
+app.use("/canchas", Canchas_routes_1.default);
 //Servidor Raiz.
-app.get('/', (req, res) => {
-    res.send('Root server is on yai');
+app.get("/", (req, res) => {
+    res.send("Root server is on yai");
 });
 //Mensaje de consola que dice que funciona.
 app.listen(port, () => {
