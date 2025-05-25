@@ -65,6 +65,7 @@ class Partido {
             return resultado;
         });
     }
+    //Historial
     static obtenerHistorialPartidos(idPartido) {
         return __awaiter(this, void 0, void 0, function* () {
             const { data, error } = yield supabase_1.default.rpc("p_obtener_historial_partidos");
