@@ -146,3 +146,56 @@ export const iniciarPartido = async (
     });
   }
 };
+
+export const obenterPartidosDiaActual = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const id_cancha = Number(req.params.id_cancha);
+
+    if (!id_cancha) {
+      return res.status(400).json({
+        message: "El parametro id cancha es requerido",
+        resultado: -2,
+      });
+    }
+
+    const partidos = await Partido.obtenerPartidosDelDiaActual(id_cancha);
+    console.log(partidos);
+
+    if (partidos.length === 0) {
+      return res.status(400).json({
+        message: "No se encontraron partidos en el día de hoy para la cancha",
+        id_cancha,
+        codigoResultado: -1,
+        data: [],
+      });
+    }
+
+    if (partidos[0].id_partido_out === 0) {
+      return res.status(400).json({
+        message: "No existe el id cancha",
+        codigoResultado: -3,
+      });
+    }
+
+    return res.status(200).json({
+      message: "Partidos encontrados",
+      codigoResultado: 0,
+      data: partidos,
+    });
+  } catch (error) {
+    const errorMessage =
+      error && typeof error === "object" && "message" in error
+        ? (error as { message: string }).message
+        : String(error);
+
+    console.error("Error al crear partido:", errorMessage);
+    return res.status(500).json({
+      mensaje: "Error interno del servidor",
+      detalle: errorMessage,
+      codigoResultado: -99,
+    });
+  }
+};

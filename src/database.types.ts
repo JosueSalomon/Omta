@@ -428,13 +428,23 @@ export type Database = {
           nombre_cancha_out: string
         }[]
       }
+      fn_obtener_partidos_fecha_actual: {
+        Args: Record<PropertyKey, never> | { fn_id_cancha: number }
+        Returns: {
+          id_partido_out: number
+          id_cancha_out: number
+          nombre_cancha_out: string
+          fecha_out: string
+          hora_inicio_out: string
+        }[]
+      }
       fn_sumar_punto: {
         Args: {
           p_id_partido: number
           p_id_set: number
           p_id_jugador_que_aumenta_punto: number
         }
-        Returns: string
+        Returns: Json
       }
       get_canchas: {
         Args: Record<PropertyKey, never>
@@ -450,6 +460,10 @@ export type Database = {
       p_finalizar_partido: {
         Args: { p_id_partido: number }
         Returns: Record<string, unknown>
+      }
+      p_obtener_historial_partidos: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
       }
     }
     Enums: {

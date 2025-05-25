@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.iniciarPartido = exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
+exports.obenterPartidosDiaActual = exports.iniciarPartido = exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
 const Partido_model_1 = require("../Models/Partido.model");
 const cancelarPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -122,3 +122,47 @@ const iniciarPartido = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.iniciarPartido = iniciarPartido;
+const obenterPartidosDiaActual = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id_cancha = Number(req.params.id_cancha);
+        if (!id_cancha) {
+            return res.status(400).json({
+                message: "El parametro id cancha es requerido",
+                resultado: -2,
+            });
+        }
+        const partidos = yield Partido_model_1.Partido.obtenerPartidosDelDiaActual(id_cancha);
+        console.log(partidos);
+        if (partidos.length === 0) {
+            return res.status(400).json({
+                message: "No se encontraron partidos en el día de hoy para la cancha",
+                id_cancha,
+                codigoResultado: -1,
+                data: [],
+            });
+        }
+        if (partidos[0].id_partido_out === 0) {
+            return res.status(400).json({
+                message: "No existe el id cancha",
+                codigoResultado: -3,
+            });
+        }
+        return res.status(200).json({
+            message: "Partidos encontrados",
+            codigoResultado: 0,
+            data: partidos,
+        });
+    }
+    catch (error) {
+        const errorMessage = error && typeof error === "object" && "message" in error
+            ? error.message
+            : String(error);
+        console.error("Error al crear partido:", errorMessage);
+        return res.status(500).json({
+            mensaje: "Error interno del servidor",
+            detalle: errorMessage,
+            codigoResultado: -99,
+        });
+    }
+});
+exports.obenterPartidosDiaActual = obenterPartidosDiaActual;

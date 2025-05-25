@@ -65,5 +65,14 @@ class Partido {
             return resultado;
         });
     }
+    static obtenerPartidosDelDiaActual(id_cancha) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data, error } = yield supabase_1.default.rpc("fn_obtener_partidos_fecha_actual", { fn_id_cancha: id_cancha });
+            if (error) {
+                throw new Error(`Error Supabase: ${error.message}`);
+            }
+            return data;
+        });
+    }
 }
 exports.Partido = Partido;

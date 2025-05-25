@@ -74,4 +74,17 @@ export class Partido {
     const resultado = data[0];
     return resultado;
   }
+
+  static async obtenerPartidosDelDiaActual(id_cancha: number) {
+    const { data, error } = await supabase.rpc(
+      "fn_obtener_partidos_fecha_actual",
+      { fn_id_cancha: id_cancha }
+    );
+
+    if (error) {
+      throw new Error(`Error Supabase: ${error.message}`);
+    }
+
+    return data;
+  }
 }
