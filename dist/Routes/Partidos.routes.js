@@ -11,5 +11,6 @@ router.post("/crear", Partido_controller_1.crearPartido);
 router.put("/cancelar/:id", Partido_controller_1.cancelarPartido);
 router.put("/finalizar/:id", Partido_controller_1.finalizarPartido);
 router.post("/iniciarPartido/:id_partido", Partido_controller_1.iniciarPartido);
+router.get("/historial", Partido_controller_1.obtenerHistorialPartidos);
 router.get("/obtenerPartidosDiaActual/:id_cancha", Partido_controller_1.obenterPartidosDiaActual);
 exports.default = router;

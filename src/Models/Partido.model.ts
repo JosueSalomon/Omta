@@ -74,6 +74,16 @@ export class Partido {
     const resultado = data[0];
     return resultado;
   }
+  //Historial
+  static async obtenerHistorialPartidos(idPartido: number) {
+    const { data, error } = await supabase.rpc("p_obtener_historial_partidos");
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 
   static async obtenerPartidosDelDiaActual(id_cancha: number) {
     const { data, error } = await supabase.rpc(
