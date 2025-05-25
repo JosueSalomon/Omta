@@ -26,5 +26,16 @@ class Partido {
             return data;
         });
     }
+    static finalizarPartido(idPartido) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data, error } = yield supabase_1.default.rpc('p_finalizar_partido', {
+                p_id_partido: idPartido
+            });
+            if (error) {
+                throw error;
+            }
+            return data;
+        });
+    }
 }
 exports.Partido = Partido;

@@ -17,4 +17,18 @@ export class Partido{
 
     }
 
+    static async finalizarPartido(idPartido: number){
+
+        const {data, error} = await supabase.rpc('p_finalizar_partido', {
+            p_id_partido: idPartido
+        });
+
+        if(error){
+            throw error;
+        }
+
+        return data;
+
+    }
+
 }
