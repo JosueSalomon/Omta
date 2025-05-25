@@ -10,4 +10,5 @@ const router = express_1.default.Router();
 router.post("/crear", Partido_controller_1.crearPartido);
 router.put("/cancelar/:id", Partido_controller_1.cancelarPartido);
 router.put("/finalizar/:id", Partido_controller_1.finalizarPartido);
+router.post("/iniciarPartido/:id_partido", Partido_controller_1.iniciarPartido);
 exports.default = router;

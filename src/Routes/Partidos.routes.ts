@@ -3,6 +3,7 @@ import {
   cancelarPartido,
   finalizarPartido,
   crearPartido,
+  iniciarPartido,
 } from "../Controllers/Partido.controller";
 
 const router = express.Router();
@@ -10,5 +11,6 @@ const router = express.Router();
 router.post("/crear", crearPartido);
 router.put("/cancelar/:id", cancelarPartido);
 router.put("/finalizar/:id", finalizarPartido);
+router.post("/iniciarPartido/:id_partido", iniciarPartido);
 
 export default router;

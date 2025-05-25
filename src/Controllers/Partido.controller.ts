@@ -107,3 +107,42 @@ export const crearPartido = async (
     });
   }
 };
+
+export const iniciarPartido = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const id_partido = req.params.id_partido;
+
+    if (!id_partido) {
+      return res.status(400).json({
+        mensaje: "El campo 'id_partido' es requerido",
+        codigoResultado: -1,
+      });
+    }
+
+    // Llama al método correspondiente en el modelo Partido para iniciar el partido
+    const resultado = await Partido.iniciarPartido(Number(id_partido));
+
+    return res.status(200).json({
+      mensaje: resultado.mensaje,
+      codigoResultado: resultado.codigo,
+      id_partido: resultado.id_partido_out,
+      id_set: resultado.id_set_out,
+      id_juego: resultado.id_juego_out,
+    });
+  } catch (error) {
+    const errorMessage =
+      error && typeof error === "object" && "message" in error
+        ? (error as { message: string }).message
+        : String(error);
+
+    console.error("Error al iniciar partido:", errorMessage);
+    return res.status(500).json({
+      mensaje: "Error interno del servidor",
+      detalle: errorMessage,
+      codigoResultado: -99,
+    });
+  }
+};

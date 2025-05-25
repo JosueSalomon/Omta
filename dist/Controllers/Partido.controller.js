@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
+exports.iniciarPartido = exports.crearPartido = exports.finalizarPartido = exports.cancelarPartido = void 0;
 const Partido_model_1 = require("../Models/Partido.model");
 const cancelarPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -90,3 +90,35 @@ const crearPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.crearPartido = crearPartido;
+const iniciarPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id_partido = req.params.id_partido;
+        if (!id_partido) {
+            return res.status(400).json({
+                mensaje: "El campo 'id_partido' es requerido",
+                codigoResultado: -1,
+            });
+        }
+        // Llama al método correspondiente en el modelo Partido para iniciar el partido
+        const resultado = yield Partido_model_1.Partido.iniciarPartido(Number(id_partido));
+        return res.status(200).json({
+            mensaje: resultado.mensaje,
+            codigoResultado: resultado.codigo,
+            id_partido: resultado.id_partido_out,
+            id_set: resultado.id_set_out,
+            id_juego: resultado.id_juego_out,
+        });
+    }
+    catch (error) {
+        const errorMessage = error && typeof error === "object" && "message" in error
+            ? error.message
+            : String(error);
+        console.error("Error al iniciar partido:", errorMessage);
+        return res.status(500).json({
+            mensaje: "Error interno del servidor",
+            detalle: errorMessage,
+            codigoResultado: -99,
+        });
+    }
+});
+exports.iniciarPartido = iniciarPartido;

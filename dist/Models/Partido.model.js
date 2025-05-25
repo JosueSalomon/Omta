@@ -53,5 +53,17 @@ class Partido {
             return resultado;
         });
     }
+    static iniciarPartido(idPartido) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data, error } = yield supabase_1.default.rpc("fn_iniciar_partido", {
+                fn_id_partido: idPartido,
+            });
+            if (error) {
+                throw new Error(`Error Supabase: ${error.message}`);
+            }
+            const resultado = data[0];
+            return resultado;
+        });
+    }
 }
 exports.Partido = Partido;
