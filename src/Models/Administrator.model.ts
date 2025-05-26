@@ -1,4 +1,5 @@
 import supabase from '../Utils/supabase';
+import { createToken } from '../services/jwt'
 
 export class Administrator {
     static async sumarPunto(p_id_partido: number, p_id_set: number, p_id_jugador_que_aumenta_punto: number) {
@@ -40,43 +41,60 @@ static async insertUserToken(user: any, contrasenia: any, token: any): Promise<a
     }
 
     static async Login(user: string, contra: string){
-        const{data,error} = await supabase.rpc("login_admin",{
+        const{data, error} = await supabase.rpc("login_admin",{
             p_user:user,
             p_contra:contra
         });
 
-        if (!data) {
+        console.log(data);
+        if (!data || !data[0]) {
             return "null";
         }
 
-        if (data.codigo === 1) {
-            return {
-                code: 1,
-                message: "Usuario no encontrado"
-            };
-        }
-
-        if (data.codigo === 2) {
+        if (data[0].codigo === 2) {
             return {
                 code: 2,
                 message: "Contraseña incorrecta"
             };
         }
 
-        if (data.codigo === 3) {
+        if (data[0].codigo === 3) {
             return {
                 code: 3,
                 message: "Login exitoso"
             };
-        };
+        }
 
-        if (data.codigo === 4) {
+        if (data[0].codigo === 4) {
             return {
                 code: 4,
-                message: "Error insesperado"
+                message: "Error inesperado"
             };
-        };
+        }
+
+        if (data[0].codigo === 1) {
+            if (!data[0].id_usuario || !data[0].usuario) {
+                console.error("Error: Insufficient data to generate the token", data);
+                return "Insufficient data to generate the token";
+            }
+
+            const token = createToken(data[0].id_usuario, data[0].usuario);
+            console.log(token);
+
+            // Opcional: agregar el token al objeto para devolverlo al frontend
+            data[0].token_actual = token;
+
+            return data[0];
+        }
+
+        
+        } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        } else {
+            throw new Error("Unknown error");
+        }
     }
-    
+        
 
 }

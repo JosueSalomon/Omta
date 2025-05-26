@@ -7,4 +7,5 @@ const express_1 = __importDefault(require("express"));
 const Administrator_controller_1 = require("../Controllers/Administrator.controller");
 const router = express_1.default.Router();
 router.post("/sumapunto/partido/:id", Administrator_controller_1.sumarPuntos);
+router.post("/login", Administrator_controller_1.Login);
 exports.default = router;

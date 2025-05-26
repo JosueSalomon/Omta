@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sumarPuntos = void 0;
+exports.Login = exports.sumarPuntos = void 0;
 const Administrator_model_1 = require("../Models/Administrator.model");
 const sumarPuntos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -32,3 +32,23 @@ const sumarPuntos = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.sumarPuntos = sumarPuntos;
+const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { user, contra } = req.body;
+        const result = yield Administrator_model_1.Administrator.Login(user, contra);
+        res.status(201).json({
+            result,
+        });
+    }
+    catch (error) {
+        const errorInfo = error && typeof error === "object"
+            ? JSON.stringify(error, null, 2)
+            : (error === null || error === void 0 ? void 0 : error.toString()) || "Unknown error";
+        console.error("Error Information: ", errorInfo);
+        res.status(500).json({
+            message: "Error Information: ",
+            error: errorInfo,
+        });
+    }
+});
+exports.Login = Login;
