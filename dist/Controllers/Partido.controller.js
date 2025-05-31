@@ -53,18 +53,20 @@ const finalizarPartido = (req, res) => __awaiter(void 0, void 0, void 0, functio
 exports.finalizarPartido = finalizarPartido;
 const crearPartido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio, } = req.body;
-        if (!id_cancha ||
-            !nombre_jugador_1 ||
-            !nombre_jugador_2 ||
-            !fecha_partido ||
-            !hora_inicio) {
+        const { id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio, ventaja, super_tie_break, } = req.body;
+        if (id_cancha == null ||
+            nombre_jugador_1 == null ||
+            nombre_jugador_2 == null ||
+            fecha_partido == null ||
+            hora_inicio == null ||
+            ventaja == null ||
+            super_tie_break == null) {
             return res.status(400).json({
                 mensaje: "Faltan campos en el body",
                 codigoResultado: -1,
             });
         }
-        const resultado = yield Partido_model_1.Partido.crear_partido(id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio);
+        const resultado = yield Partido_model_1.Partido.crear_partido(id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio, ventaja, super_tie_break);
         if (resultado.codigo !== 0) {
             return res.status(400).json({
                 mensaje: resultado.mensaje,

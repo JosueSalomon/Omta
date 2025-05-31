@@ -37,7 +37,7 @@ class Partido {
             return data;
         });
     }
-    static crear_partido(id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio) {
+    static crear_partido(id_cancha, nombre_jugador_1, nombre_jugador_2, fecha_partido, hora_inicio, ventaja, super_tie_break) {
         return __awaiter(this, void 0, void 0, function* () {
             const { data, error } = yield supabase_1.default.rpc("fn_crear_partido", {
                 fn_id_cancha: id_cancha,
@@ -45,6 +45,8 @@ class Partido {
                 nombre_jugador_2: nombre_jugador_2,
                 fn_fecha_partido: fecha_partido,
                 fn_hora_inicio: hora_inicio,
+                fn_ventaja: ventaja,
+                fn_super_tie_break: super_tie_break,
             });
             if (error) {
                 throw new Error(`Error Supabase: ${error.message}`);
