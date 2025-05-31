@@ -44,7 +44,9 @@ export class Partido {
     nombre_jugador_1: string,
     nombre_jugador_2: string,
     fecha_partido: string,
-    hora_inicio: string
+    hora_inicio: string,
+    ventaja: boolean,
+    super_tie_break: boolean
   ) {
     const { data, error } = await supabase.rpc("fn_crear_partido", {
       fn_id_cancha: id_cancha,
@@ -52,6 +54,8 @@ export class Partido {
       nombre_jugador_2: nombre_jugador_2,
       fn_fecha_partido: fecha_partido,
       fn_hora_inicio: hora_inicio,
+      fn_ventaja: ventaja,
+      fn_super_tie_break: super_tie_break,
     });
 
     if (error) {

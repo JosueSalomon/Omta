@@ -58,6 +58,8 @@ export const crearPartido = async (
       nombre_jugador_2,
       fecha_partido,
       hora_inicio,
+      ventaja,
+      super_tie_break,
     } = req.body;
 
     if (
@@ -65,7 +67,9 @@ export const crearPartido = async (
       !nombre_jugador_1 ||
       !nombre_jugador_2 ||
       !fecha_partido ||
-      !hora_inicio
+      !hora_inicio ||
+      !ventaja ||
+      !super_tie_break
     ) {
       return res.status(400).json({
         mensaje: "Faltan campos en el body",
@@ -78,7 +82,9 @@ export const crearPartido = async (
       nombre_jugador_1,
       nombre_jugador_2,
       fecha_partido,
-      hora_inicio
+      hora_inicio,
+      ventaja,
+      super_tie_break
     );
 
     if (resultado.codigo !== 0) {
